@@ -1,24 +1,54 @@
 # Frostclone Architecture & Engine Specification
 
-This document details the internal architecture, event streaming contracts, and extension points of the Frostclone ingestion platform.
+This document details the internal architecture, deterministic runtime guarantees, streaming protocol, and differentiation of the Frostclone ingestion platform.
 
 ---
 
-## 1. System Overview
+## 1. Deterministic Runtime Guarantee (Zero-LLM Pipeline)
 
-Frostclone is structured into three distinct tiers:
+Frostclone is **not an AI synthesis wrapper**. It runs on a **100% deterministic, programmatic pipeline**:
 
-1. **Presentation Tier (`src/app/page.tsx`):**
-   - React 19 Client Component using Server-Sent Events (SSE) consumer via `ReadableStreamDefaultReader`.
-   - Dynamic path slugging and auto-scrolling terminal logs.
-2. **Transportation Tier (`src/app/api/clone/route.ts`):**
-   - Next.js dynamic Route Handler that converts the engine's internal progress events into `text/event-stream` chunks.
-3. **Execution Tier (`src/lib/cloner/`):**
-   - Orchestrator (`engine.ts`) managing the filesystem lifecycle and delegating to specialized extraction engines (`cargo.ts`, `generic.ts`).
+- **No LLM Tokens:** Ingestion, AST parsing, and code generation do not invoke OpenAI, Anthropic, or local model weights.
+- **Reproducibility:** Two runs against the same static target yield identical outputs.
+- **Zero API Keys & Cost:** Requires no external service accounts, internet-facing AI gateways, or credit card authorizations.
+- **Air-Gapped & Confidential:** Safe to execute within restricted corporate or government networks without leaking target URLs or DOM structure to third-party LLM providers.
 
 ---
 
-## 2. Ingestion Lifecycle
+## 2. Technical Differentiation: Frostclone vs. Legacy Programmatic Tools
+
+```mermaid
+graph TD
+    subgraph Legacy [Traditional Scrapers: Wget / HTTrack / SingleFile]
+        A[Target Site] --> B[Raw HTML Dump]
+        B --> C[Broken relative paths & dead JS bundles]
+        C --> D[Flat archival document, uneditable]
+    end
+
+    subgraph Frostclone [Frostclone Ingestion Engine]
+        E[Target Site] --> F[Dynamic Extraction & Asset Mining]
+        F --> G[POSIX Hardlinked Dependencies: cp -al]
+        F --> H[AST Client-Bundle Rewriting]
+        G --> I[Complete Next.js 16 Codebase]
+        H --> I
+        I --> J[Production-Grade Turbopack Application]
+    end
+```
+
+### Key Architectural Differences
+
+| Capability | Legacy Scrapers (`wget`, `HTTrack`) | SingleFile / MHTML | Frostclone |
+| :--- | :--- | :--- | :--- |
+| **Output Format** | Flat directory of `.html` / `.js` | Monolithic base64 HTML blob | **Complete Next.js 16 Project** |
+| **Modern Framework Stack** | None (static files) | None | **React 19, TypeScript, Tailwind v4** |
+| **Client-Side SPA / Vite** | Fails (saves `<div id="root"></div>`) | Incomplete DOM freeze | **Patches bundles & mines asset matrix** |
+| **Editable Components** | Unmaintainable minified chunks | Monolithic uneditable file | **Modular page, layout & globals.css** |
+| **Disk Efficiency** | Redundant or requires `npm install` | High per-file footprint | **Hardlinked node_modules (0 MB duplicate)** |
+| **Verification Gate** | None (runtime failures common) | None | **Automated `tsc --noEmit` validation** |
+
+---
+
+## 3. Ingestion Lifecycle
 
 ```
 [User Request: URL + Destination]
@@ -43,14 +73,16 @@ Frostclone is structured into three distinct tiers:
 [4. Platform Detection]
      ├── Cargo Collective: `cargo.site` / `data-set="ScaffoldingData"`
      │     └── Executes `processCargoSite()`
-     └── Generic HTML: Semantic DOM detection
+     ├── Client-Side SPA: Vite / React bundle signatures
+     │     └── Executes bundle extraction & relative asset mining
+     └── Generic HTML: Semantic DOM & full CSS harvesting
            └── Executes `processGenericSite()`
            │
            ▼
 [5. Asset Acquisition & Codegen]
      - Downloads fonts, icons, cursors, images
-     - Writes typed components (`Header`, `GalleryView`, `BottomLogo`, etc.)
-     - Injects styling into `src/app/globals.css` and `src/app/layout.tsx`
+     - Rewrites relative CSS `url(...)` declarations to absolute origins
+     - Writes typed Next.js components (`page.tsx`, `layout.tsx`, `globals.css`)
            │
            ▼
 [6. Integrity Verification]
@@ -63,7 +95,7 @@ Frostclone is structured into three distinct tiers:
 
 ---
 
-## 3. Streaming Event Protocol
+## 4. Streaming Event Protocol
 
 All progress events emitted by `/api/clone` adhere to the `CloneProgressEvent` interface:
 
@@ -88,35 +120,6 @@ export interface CloneProgressEvent {
 
 ---
 
-## 4. Extensibility: Adding a New Extractor
-
-To support additional website platforms (e.g., Webflow, Squarespace, Shopify, WordPress):
-
-1. **Create an Extractor Module in `src/lib/cloner/<platform>.ts`:**
-   Implement a processing function:
-   ```typescript
-   export async function processPlatformSite(
-     html: string,
-     targetUrl: string,
-     destDir: string,
-     emitLog: (entry: CloneLogEntry) => void
-   ): Promise<{ siteTitle: string; assetsCount: number; componentsCount: number }>
-   ```
-
-2. **Register in `src/lib/cloner/engine.ts`:**
-   Add a detection condition in the platform detector step:
-   ```typescript
-   if (isCargo) {
-     resultSummary = await processCargoSite(html, destDir, emitLog);
-   } else if (isPlatform(html)) {
-     resultSummary = await processPlatformSite(html, targetUrl, destDir, emitLog);
-   } else {
-     resultSummary = await processGenericSite(html, targetUrl, destDir, emitLog);
-   }
-   ```
-
----
-
 ## 5. Turbopack & Hardlinking Design
 
 Next.js Turbopack strictly enforces that `node_modules` must not resolve to symlinks pointing outside the filesystem root of the application project. 
@@ -124,6 +127,6 @@ Next.js Turbopack strictly enforces that `node_modules` must not resolve to syml
 Frostclone solves this without duplicating ~400MB of dependencies per clone by using **filesystem hardlinks (`cp -al`)**. 
 
 - On Linux/POSIX filesystems, hardlinked directory entries point to the same underlying inodes.
-- Creation is instantaneous (<0.2s).
+- Creation is instantaneous (<0.5s).
 - Zero additional disk space is consumed for shared dependencies.
 - Turbopack perceives `node_modules` as standard local directory entries within the project root.
