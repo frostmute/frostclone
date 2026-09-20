@@ -1,6 +1,8 @@
-# ❄️ Frostclone
-
 <div align="center">
+
+<img src="public/images/frostclone-banner.svg" alt="Frostclone Banner" width="100%" />
+
+<br /><br />
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Runtime: Deterministic](https://img.shields.io/badge/Runtime-Deterministic%20(No%20LLM)-emerald)](docs/ARCHITECTURE.md)

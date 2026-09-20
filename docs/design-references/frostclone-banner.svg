@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#07090e"/>
+      <stop offset="50%" stop-color="#0d111a"/>
+      <stop offset="100%" stop-color="#05070a"/>
+    </linearGradient>
+
+    <!-- Frost Cyan Gradient -->
+    <linearGradient id="frost-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+
+    <!-- Glow Neon -->
+    <linearGradient id="glow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#60a5fa" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Chrome/Glass Gradient -->
+    <linearGradient id="glass-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+
+    <!-- Core Snowflake Gradient -->
+    <linearGradient id="core-crystal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e0f2fe"/>
+      <stop offset="40%" stop-color="#38bdf8"/>
+      <stop offset="80%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+
+    <!-- Drop Shadow / Glow Filter -->
+    <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="16" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="ambient-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="40" result="blur"/>
+    </filter>
+  </defs>
+
+  <!-- Deep Canvas -->
+  <rect width="1200" height="480" rx="20" fill="url(#bg-grad)"/>
+
+  <!-- Subtle Ambient Glow Orbs -->
+  <circle cx="280" cy="240" r="160" fill="#0284c7" opacity="0.22" filter="url(#ambient-glow)"/>
+  <circle cx="950" cy="180" r="140" fill="#3b82f6" opacity="0.12" filter="url(#ambient-glow)"/>
+
+  <!-- Grid Tech Lines (Cyberpunk / Precision) -->
+  <g opacity="0.12" stroke="#38bdf8" stroke-width="1">
+    <line x1="60" y1="80" x2="1140" y2="80"/>
+    <line x1="60" y1="400" x2="1140" y2="400"/>
+    <line x1="60" y1="80" x2="60" y2="400"/>
+    <line x1="1140" y1="80" x2="1140" y2="400"/>
+    
+    <!-- Dots at intersections -->
+    <circle cx="60" cy="80" r="3" fill="#38bdf8"/>
+    <circle cx="1140" cy="80" r="3" fill="#38bdf8"/>
+    <circle cx="60" cy="400" r="3" fill="#38bdf8"/>
+    <circle cx="1140" cy="400" r="3" fill="#38bdf8"/>
+  </g>
+
+  <!-- ==================== LEFT: LOGO EMBLEM ==================== -->
+  <g transform="translate(230, 240)">
+    <!-- Backing Geometric Halo -->
+    <circle cx="0" cy="0" r="110" fill="none" stroke="url(#frost-grad)" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.4"/>
+    <polygon points="0,-120 104,-60 104,60 0,120 -104,60 -104,-60" fill="url(#glass-grad)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.5"/>
+
+    <!-- Outer Crystalline Nodes -->
+    <g stroke="url(#frost-grad)" stroke-width="3.5" stroke-linecap="round">
+      <!-- 6 Axes of the Snowflake / Ingestion Matrix -->
+      <!-- Axis 1: North -->
+      <line x1="0" y1="0" x2="0" y2="-90" filter="url(#neon-glow)"/>
+      <path d="M -18,-65 L 0,-85 L 18,-65" fill="none"/>
+      <path d="M -12,-40 L 0,-52 L 12,-40" fill="none"/>
+      
+      <!-- Axis 2: North-East -->
+      <line x1="0" y1="0" x2="78" y2="-45" filter="url(#neon-glow)"/>
+      <path d="M 47,-68 L 74,-43 L 47,-25" fill="none"/>
+      
+      <!-- Axis 3: South-East -->
+      <line x1="0" y1="0" x2="78" y2="45" filter="url(#neon-glow)"/>
+      <path d="M 47,25 L 74,43 L 47,68" fill="none"/>
+      
+      <!-- Axis 4: South -->
+      <line x1="0" y1="0" x2="0" y2="90" filter="url(#neon-glow)"/>
+      <path d="M -18,65 L 0,85 L 18,65" fill="none"/>
+      <path d="M -12,40 L 0,52 L 12,40" fill="none"/>
+      
+      <!-- Axis 5: South-West -->
+      <line x1="0" y1="0" x2="-78" y2="45" filter="url(#neon-glow)"/>
+      <path d="M -47,68 L -74,43 L -47,25" fill="none"/>
+      
+      <!-- Axis 6: North-West -->
+      <line x1="0" y1="0" x2="-78" y2="-45" filter="url(#neon-glow)"/>
+      <path d="M -47,-25 L -74,-43 L -47,-68" fill="none"/>
+    </g>
+
+    <!-- Center Crystalline Prisms (Twin Cloning Hexagons) -->
+    <polygon points="0,-44 38,-22 38,22 0,44 -38,22 -38,-22" fill="#0b111e" stroke="#38bdf8" stroke-width="2.5"/>
+    <polygon points="0,-32 28,-16 28,16 0,32 -28,16 -28,-16" fill="url(#core-crystal)" opacity="0.9" filter="url(#neon-glow)"/>
+    
+    <!-- Central Shard Core -->
+    <polygon points="0,-18 15,-8 15,8 0,18 -15,8 -15,-8" fill="#ffffff"/>
+  </g>
+
+  <!-- ==================== RIGHT: TYPOGRAPHY & TAGLINE ==================== -->
+  <g transform="translate(440, 165)">
+    <!-- Tech Badge -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="260" height="26" rx="13" fill="#0369a1" fill-opacity="0.25" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.4"/>
+      <circle cx="14" cy="13" r="4" fill="#38bdf8"/>
+      <text x="28" y="17" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" letter-spacing="1.5">DETERMINISTIC INGESTION</text>
+    </g>
+
+    <!-- Main Wordmark -->
+    <g transform="translate(0, 75)">
+      <text x="0" y="0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif" font-size="76" font-weight="900" letter-spacing="-2" fill="#ffffff">
+        Frost<tspan fill="url(#frost-grad)">clone</tspan>
+      </text>
+      <circle cx="445" cy="-52" r="6" fill="#38bdf8" filter="url(#neon-glow)"/>
+    </g>
+
+    <!-- Subtitle -->
+    <g transform="translate(2, 115)">
+      <text x="0" y="0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="400" fill="#94a3b8" letter-spacing="-0.2">
+        High-Fidelity Reverse-Engineering &amp; Site Ingestion Platform
+      </text>
+    </g>
+
+    <!-- Feature Pillars Badges -->
+    <g transform="translate(2, 160)" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="12" font-weight="500">
+      <!-- Badge 1: Zero LLM -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="140" height="30" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+        <text x="14" y="19" fill="#38bdf8">⚡ Zero-LLM (0$)</text>
+      </g>
+      
+      <!-- Badge 2: Byte Exact -->
+      <g transform="translate(150, 0)">
+        <rect x="0" y="0" width="165" height="30" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+        <text x="14" y="19" fill="#34d399">🎯 Byte-Exact Parity</text>
+      </g>
+
+      <!-- Badge 3: Next.js 16 -->
+      <g transform="translate(325, 0)">
+        <rect x="0" y="0" width="140" height="30" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+        <text x="14" y="19" fill="#e2e8f0">▲ Next.js 16 App</text>
+      </g>
+    </g>
+  </g>
+</svg>

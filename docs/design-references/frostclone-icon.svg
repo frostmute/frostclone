@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="icon-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b111e"/>
+      <stop offset="100%" stop-color="#04060a"/>
+    </linearGradient>
+
+    <linearGradient id="icon-frost" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+
+    <linearGradient id="icon-core" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e0f2fe"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+
+    <filter id="icon-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#icon-bg)" stroke="#1e293b" stroke-width="4"/>
+
+  <!-- Halo Ring -->
+  <circle cx="256" cy="256" r="170" fill="none" stroke="url(#icon-frost)" stroke-width="2" stroke-dasharray="8 12" opacity="0.4"/>
+  <polygon points="256,76 412,166 412,346 256,436 100,346 100,166" fill="none" stroke="#38bdf8" stroke-width="2.5" opacity="0.3"/>
+
+  <!-- Outer Crystal Nodes -->
+  <g stroke="url(#icon-frost)" stroke-width="6" stroke-linecap="round" filter="url(#icon-glow)">
+    <!-- North -->
+    <line x1="256" y1="256" x2="256" y2="120"/>
+    <path d="M 230,155 L 256,128 L 282,155" fill="none"/>
+
+    <!-- North-East -->
+    <line x1="256" y1="256" x2="374" y2="188"/>
+    <path d="M 326,155 L 368,191 L 326,218" fill="none"/>
+
+    <!-- South-East -->
+    <line x1="256" y1="256" x2="374" y2="324"/>
+    <path d="M 326,294 L 368,321 L 326,357" fill="none"/>
+
+    <!-- South -->
+    <line x1="256" y1="256" x2="256" y2="392"/>
+    <path d="M 230,357 L 256,384 L 282,357" fill="none"/>
+
+    <!-- South-West -->
+    <line x1="256" y1="256" x2="138" y2="324"/>
+    <path d="M 186,357 L 144,321 L 186,294" fill="none"/>
+
+    <!-- North-West -->
+    <line x1="256" y1="256" x2="138" y2="188"/>
+    <path d="M 186,218 L 144,191 L 186,155" fill="none"/>
+  </g>
+
+  <!-- Center Core Hexagons -->
+  <polygon points="256,190 313,223 313,289 256,322 199,289 199,223" fill="#070d18" stroke="#38bdf8" stroke-width="4"/>
+  <polygon points="256,206 299,231 299,281 256,306 213,281 213,231" fill="url(#icon-core)" opacity="0.9" filter="url(#icon-glow)"/>
+  
+  <!-- Central White Shard Core -->
+  <polygon points="256,230 278,243 278,269 256,282 234,269 234,243" fill="#ffffff"/>
+</svg>
