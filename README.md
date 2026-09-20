@@ -1,171 +1,163 @@
-# AI Website Cloner Template
+# ❄️ Frostclone
 
-<a href="https://github.com/JCodesMore/ai-website-cloner-template/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License" /></a> <a href="https://github.com/JCodesMore/ai-website-cloner-template/stargazers"><img src="https://img.shields.io/github/stars/JCodesMore/ai-website-cloner-template?style=flat" alt="Stars" /></a> <a href="https://discord.gg/hrTSX5yTpB"><img src="https://img.shields.io/discord/1400896964597383279?label=discord" alt="Discord" /></a>
+<div align="center">
 
-A reusable template for reverse-engineering any website into a clean, modern Next.js codebase using AI coding agents. 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2-black?logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?logo=tailwind-css)](https://tailwindcss.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178c6?logo=typescript)](https://www.typescriptlang.org/)
 
-**Recommended: [Claude Code](https://docs.anthropic.com/en/docs/claude-code) with Opus 4.7 for best results** — but works with a variety of AI coding agents.
+**Autonomous Website Re-engineering & Ingestion Engine with Standalone Web GUI**
 
-Point it at a URL, run `/clone-website`, and your AI agent will inspect the site, extract design tokens and assets, write component specs, and dispatch parallel builders to reconstruct every section.
+*Input any URL → Specify your local destination → Generate a standalone, runnable Next.js 16 codebase in seconds.*
 
-## Demo
+---
 
-[![Watch the demo](docs/design-references/comparison.png)](https://youtu.be/O669pVZ_qr0)
+![Frostclone GUI](docs/design-references/frostclone-gui.png)
 
-> Click the image above to watch the full demo on YouTube.
+</div>
 
-## Quick Start
+---
 
-> **Important:** Start by making your own copy with GitHub's **Use this template** button. Do not clone this template repository directly for your website project, and do not open pull requests here with your generated website.
+## 🌟 Highlights
 
-1. **Create your own repository from this template**
+- **⚡ Standalone Web GUI:** Run `frostclone` or `npm run app` to launch a clean, modern dashboard in your browser.
+- **🎯 Dynamic Port Resolution:** Automatically detects port availability (e.g., if port `3000` is busy, safely increments to `3001`, `3002`, etc.) and opens your browser directly.
+- **📂 Isolated Project Scaffolding:** Clones websites directly into a target folder of your choice (e.g., `~/Projects/mysite`) without modifying the template.
+- **🔗 Instant Hardlinked Dependencies:** Uses filesystem hardlinks (`cp -al`) for `node_modules`. Zero disk space duplication (~400MB saved per clone) and instant scaffolding (<0.5s setup time) while remaining 100% compatible with Next.js Turbopack.
+- **🧩 Specialized Ingestion Engines:**
+  - **Cargo Collective Engine:** Detects and parses Cargo data models, image galleries (1, 2, and 3 column grids), custom cursors, custom web fonts (`Diatype Variable`), slide-in menus, and lightbox modals.
+  - **Generic Site Engine:** Extracts semantic document hierarchy, hero sections, responsive feature grids, navigation bars, images, and footers.
+- **📡 Real-Time SSE Streaming Logs:** Live terminal feedback in the GUI showing stage progress, asset download logs, and compilation checkpoints.
+- **🛡️ Automated Verification:** Automatically verifies generated projects with `tsc --noEmit` before concluding.
 
-   On the GitHub page for this project, click **Use this template**, then click **Create a new repository**.
+---
 
-   Give your new repository a name, choose whether it should be public or private, then click **Create repository**. If GitHub shows an **Include all branches** option, you can leave it off.
+## 🚀 Quick Start
 
-   This gives you your own separate project to work in, so your website changes stay in your account instead of coming back to the main template.
+### 1. Run the GUI Application
 
-2. **Open your new repository on your computer**
-
-   After GitHub creates your copy, open that new repository. Click **Code** and open or clone your new repository with your preferred coding tool.
-
-   If you use the terminal, the command will look like this:
-
-   ```bash
-   git clone https://github.com/YOUR-USERNAME/YOUR-NEW-REPOSITORY.git
-   cd YOUR-NEW-REPOSITORY
-   ```
-
-3. **Install dependencies**
-   ```bash
-   npm install
-   ```
-4. **Start your AI agent** — Claude Code recommended:
-   ```bash
-   claude --chrome
-   ```
-5. **Run the skill**:
-   ```
-   /clone-website <target-url1> [<target-url2> ...]
-   ```
-6. **Customize** (optional) — after the base clone is built, modify as needed
-
-> Using a different agent? Open `AGENTS.md` for project instructions — most agents pick it up automatically.
-
-## Supported Platforms
-
-| Agent                                                         | Status                     |
-| ------------------------------------------------------------- | -------------------------- |
-| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | **Recommended** — Opus 4.7 |
-| [Codex CLI](https://github.com/openai/codex)                  | Supported                  |
-| [OpenCode](https://opencode.ai/)                              | Supported                  |
-| [GitHub Copilot](https://github.com/features/copilot)         | Supported                  |
-| [Cursor](https://cursor.com/)                                 | Supported                  |
-| [Windsurf](https://codeium.com/windsurf)                      | Supported                  |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli)     | Supported                  |
-| [Cline](https://github.com/cline/cline)                       | Supported                  |
-| [Roo Code](https://github.com/RooCodeInc/Roo-Code)            | Supported                  |
-| [Continue](https://continue.dev/)                             | Supported                  |
-| [Amazon Q](https://aws.amazon.com/q/developer/)               | Supported                  |
-| [Augment Code](https://www.augmentcode.com/)                  | Supported                  |
-| [Aider](https://aider.chat/)                                  | Supported                  |
-
-## Prerequisites
-
-- [Node.js](https://nodejs.org/) 24+
-- An AI coding agent (see [Supported Platforms](#supported-platforms))
-
-## Tech Stack
-
-- **Next.js 16** — App Router, React 19, TypeScript strict
-- **shadcn/ui** — Radix primitives + Tailwind CSS v4
-- **Tailwind CSS v4** — oklch design tokens
-- **Lucide React** — default icons (replaced by extracted SVGs during cloning)
-
-## How It Works
-
-The `/clone-website` skill runs a multi-phase pipeline:
-
-1. **Reconnaissance** — screenshots, design token extraction, interaction sweep (scroll, click, hover, responsive)
-2. **Foundation** — updates fonts, colors, globals, downloads all assets
-3. **Component Specs** — writes detailed spec files (`docs/research/components/`) with exact computed CSS values, states, behaviors, and content
-4. **Parallel Build** — dispatches builder agents in git worktrees, one per section/component
-5. **Assembly & QA** — merges worktrees, wires up the page, runs visual diff against the original
-
-Each builder agent receives the full component specification inline — exact `getComputedStyle()` values, interaction models, multi-state content, responsive breakpoints, and asset paths. No guessing.
-
-## Use Cases
-
-- **Platform migration** — rebuild a site you own from WordPress/Webflow/Squarespace into a modern Next.js codebase
-- **Lost source code** — your site is live but the repo is gone, the developer left, or the stack is legacy. Get the code back in a modern format
-- **Learning** — deconstruct how production sites achieve specific layouts, animations, and responsive behavior by working with real code
-
-## Not Intended For
-
-- **Phishing or impersonation** — this project must not be used for deceptive purposes, impersonation, or any activity that breaks the law.
-- **Passing off someone's design as your own** — logos, brand assets, and original copy belong to their owners.
-- **Violating terms of service** — some sites explicitly prohibit scraping or reproduction. Check first.
-
-## Project Structure
-
-```
-src/
-  app/              # Next.js routes
-  components/       # React components
-    ui/             # shadcn/ui primitives
-    icons.tsx       # Extracted SVG icons
-  lib/utils.ts      # cn() utility
-  types/            # TypeScript interfaces
-  hooks/            # Custom React hooks
-public/
-  images/           # Downloaded images from target
-  videos/           # Downloaded videos from target
-  seo/              # Favicons, OG images
-docs/
-  research/         # Extraction output & component specs
-  design-references/ # Screenshots
-scripts/
-  sync-agent-rules.sh  # Regenerate agent instruction files
-  sync-skills.mjs      # Regenerate /clone-website for all platforms
-AGENTS.md           # Agent instructions (single source of truth)
-CLAUDE.md           # Claude Code config (imports AGENTS.md)
-GEMINI.md           # Gemini CLI config (imports AGENTS.md)
-```
-
-## Commands
-
+From anywhere in your terminal:
 ```bash
-npm run dev    # Start dev server
-npm run build  # Production build
-npm run lint   # ESLint check
-npm run typecheck # TypeScript check
-npm run check  # Run lint + typecheck + build
+frostclone
 ```
+*(Or inside this repository: `npm run app`)*
 
-### If using docker
+### 2. Enter URL & Destination
 
+1. Enter the **Target Website URL** (e.g., `https://1987.graphics` or `https://example.com`).
+2. The **Local Clone Destination** auto-slugs (e.g., `~/Projects/1987`), or you can type a custom path.
+3. Click **Start Ingestion**.
+
+### 3. Run Your New Clone
+
+Once complete, your new site is an independent, complete Next.js project:
 ```bash
-docker compose up app --build # build and run the app
-docker compose up dev --build # run the app in dev mode on port 3001
+cd ~/Projects/1987
+npm run dev
 ```
 
-## Updating for Other Platforms
+---
 
-Two source-of-truth files power all platform support. Edit the source, then run the sync script:
+## 🏗️ Architecture & Pipeline
 
-| What                   | Source of truth                         | Sync command                       |
-| ---------------------- | --------------------------------------- | ---------------------------------- |
-| Project instructions   | `AGENTS.md`                             | `bash scripts/sync-agent-rules.sh` |
-| `/clone-website` skill | `.claude/skills/clone-website/SKILL.md` | `node scripts/sync-skills.mjs`     |
+```mermaid
+flowchart TD
+    A[Launch frostclone] --> B[Local Web GUI :3000+]
+    B -->|POST URL & Destination| C[Streaming SSE Engine: /api/clone]
+    
+    subgraph Pipeline [Ingestion Pipeline]
+        C --> D[1. Scaffold Destination Directory]
+        D --> E[2. Hardlink node_modules & Baseline Assets]
+        E --> F[3. Fetch & Analyze Target DOM]
+        F --> G{Platform Detector}
+        G -->|Cargo Site| H[Cargo Engine: Models, Cursors, Diatype Fonts, Galleries, QuickView]
+        G -->|Generic Site| I[Generic Engine: Semantic DOM, Hero, Cards, Navigation]
+        H --> J[4. Generate Components & Styles]
+        I --> J
+        J --> K[5. Run TypeScript Verification]
+    end
 
-Each script regenerates the platform-specific copies automatically. Agents that read the source files natively need no regeneration.
+    K -->|Stream Completion Event| L[GUI: Success Card & Launch Command]
+    L --> M[Independent Project Ready at ~/Projects/...]
+```
 
+---
 
-## Star History
+## 📁 Repository Structure
 
-[![Star History Chart](https://api.star-history.com/svg?repos=JCodesMore/ai-website-cloner-template&type=Date)](https://star-history.com/#JCodesMore/ai-website-cloner-template&Date)
+```
+frostclone/
+├── bin/
+│   └── frostclone.mjs        # CLI launcher with dynamic port finder & browser opener
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── clone/
+│   │   │       └── route.ts  # Streaming Server-Sent Events (SSE) route handler
+│   │   ├── globals.css       # Tailwind CSS v4 styling & design tokens
+│   │   ├── layout.tsx        # Root application layout
+│   │   └── page.tsx          # Standalone Web GUI Dashboard
+│   ├── components/
+│   │   └── ui/               # shadcn/ui primitives
+│   ├── lib/
+│   │   ├── cloner/
+│   │   │   ├── cargo.ts      # Specialized Cargo Collective extraction engine
+│   │   │   ├── engine.ts     # Master orchestration engine
+│   │   │   ├── generic.ts    # Generic website extraction engine
+│   │   │   └── types.ts      # TypeScript definitions for clone events
+│   │   └── utils.ts          # Utility helpers (cn)
+│   └── types/                # Core TypeScript schemas
+├── docs/
+│   ├── ARCHITECTURE.md       # Technical design and engine internals
+│   └── design-references/    # UI screenshots and visual references
+├── scripts/                  # Development scripts
+├── package.json
+└── tsconfig.json
+```
 
-## License
+---
 
-MIT
+## 💻 CLI Commands
+
+| Command | Description |
+|---|---|
+| `npm run app` / `frostclone` | Start the local Web GUI and open it in your default browser |
+| `npm run dev` | Start Next.js development server |
+| `npm run build` | Compile optimized production build with Turbopack |
+| `npm run start` | Serve production build locally |
+| `npm run typecheck` | Run strict TypeScript compiler verification (`tsc --noEmit`) |
+| `npm run lint` | Run ESLint across the codebase |
+| `npm run check` | Run `lint` + `typecheck` + `build` in sequence |
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 16 (App Router, Turbopack)
+- **Runtime:** Node.js 24+ / React 19
+- **Styling:** Tailwind CSS v4 with OKLCH tokens
+- **Communication:** Server-Sent Events (SSE) via Web Streams API
+- **Tooling:** TypeScript 5 (Strict Mode), ESLint 9
+
+---
+
+## ⚖️ Ethical Use & Disclaimer
+
+Frostclone is engineered for developer productivity, site migrations, and reverse-engineering research:
+
+- **Platform Migration:** Move sites you own from proprietary website builders into clean Next.js codebases.
+- **Source Recovery:** Recover modern source code for sites whose original repository or developer was lost.
+- **Design Study:** Analyze how production web designs structure CSS layouts, fonts, and responsive behavior.
+
+**Not Intended For:**
+- Phishing, credential harvesting, or deceptive impersonation.
+- Infringing upon trademarks, copyrights, or proprietary brand assets.
+- Violating website terms of service where prohibited.
+
+---
+
+## 📄 License
+
+[MIT](LICENSE) © 2026 Frostclone Authors.
