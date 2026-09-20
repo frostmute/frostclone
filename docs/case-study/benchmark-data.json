@@ -1,0 +1,37 @@
+{
+  "targetUrl": "https://linear.app",
+  "destDir": "/home/frost/Projects/linear-clone",
+  "stages": {
+    "init": {
+      "timestamp": 1.8917850000000271,
+      "duration": 1.8917850000000271
+    },
+    "scaffold": {
+      "timestamp": 1.9319279999999708,
+      "duration": 0.04014299999994364
+    },
+    "extract": {
+      "timestamp": 954.6877390000001,
+      "duration": 0.024112000000059197
+    },
+    "codegen": {
+      "timestamp": 1229.4836139999998,
+      "duration": 274.7958749999998
+    },
+    "verify": {
+      "timestamp": 2525.2312939999997,
+      "duration": 543.2424599999999
+    },
+    "done": {
+      "timestamp": 5212.761048,
+      "duration": 0.03793800000039482
+    }
+  },
+  "assetsCount": 12,
+  "componentsCount": 4,
+  "siteTitle": "Linear – The system for product development",
+  "diskUsageMB": 708,
+  "totalDurationMs": 5212.778157,
+  "buildSuccess": true,
+  "buildTimeMs": 10266.326192999999
+}

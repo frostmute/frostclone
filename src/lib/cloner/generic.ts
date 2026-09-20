@@ -62,10 +62,10 @@ export async function processGenericSite(
     }
   }
 
-  // Extract main headings
+  // Extract main headings (ignoring aria-hidden animation duplicate spans)
   const h1Match = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
-  const heroHeading = h1Match ? h1Match[1].replace(/<[^>]+>/g, "").trim() : siteTitle;
-
+  const h1Inner = h1Match ? h1Match[1].replace(/<[^>]+aria-hidden="true"[^>]*>[\s\S]*?<\/[^>]+>/gi, "") : "";
+  const heroHeading = (h1Inner ? h1Inner.replace(/<[^>]+>/g, " ").trim() : (h1Match ? h1Match[1].replace(/<[^>]+>/g, " ").trim() : siteTitle)).replace(/\s+/g, " ");
   const pMatches = [...html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)];
   let heroSubheading = "";
   for (const pm of pMatches) {
