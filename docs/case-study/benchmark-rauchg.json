@@ -1,0 +1,37 @@
+{
+  "targetUrl": "https://rauchg.com",
+  "destDir": "/home/frost/Projects/rauchg-clone",
+  "stages": {
+    "init": {
+      "timestamp": 1.7683570000000373,
+      "duration": 1.7683570000000373
+    },
+    "scaffold": {
+      "timestamp": 1.797268000000031,
+      "duration": 0.028910999999993692
+    },
+    "extract": {
+      "timestamp": 6793.958397,
+      "duration": 0.018608999999742082
+    },
+    "codegen": {
+      "timestamp": 7267.757061,
+      "duration": 473.7986639999999
+    },
+    "verify": {
+      "timestamp": 10814.701105,
+      "duration": 0.022896999998920364
+    },
+    "done": {
+      "timestamp": 12730.118365,
+      "duration": 0.0564699999995355
+    }
+  },
+  "assetsCount": 2,
+  "componentsCount": 1,
+  "siteTitle": "Guillermo Rauch&#x27;s blog",
+  "diskUsageMB": 707,
+  "totalDurationMs": 12730.140194,
+  "buildSuccess": true,
+  "buildTimeMs": 13925.662084999998
+}
